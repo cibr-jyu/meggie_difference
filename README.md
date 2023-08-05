@@ -1,6 +1,12 @@
 # meggie\_difference
 
-meggie\_difference is a simple plugin for meggie that currently supports creating difference evokeds based on existing evokeds.
+meggie\_difference is a simple plugin for meggie to create difference objects based on existing objects.
+
+## Support
+
+- [ ] Evokeds
+- [ ] Spectrums
+- [ ] TFR
 
 ## Installation
 
