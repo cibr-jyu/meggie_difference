@@ -21,9 +21,17 @@ class EvokedDifference(Action):
         subject.save()
 
     def run(self):
-        subject_name = self.experiment.active_subject.name
 
-        conditions = []
+        try:
+            selected_name = self.data['outputs']['evoked'][0]
+        except IndexError as exc:
+            return
+
+        meggie_evoked = self.experiment.active_subject.evoked.get(selected_name)
+        if not meggie_evoked:
+            return
+
+        conditions = list(meggie_evoked.content.keys())
 
         difference_dialog = DifferenceDialog(
             self.window, self.experiment, conditions, self.handler)

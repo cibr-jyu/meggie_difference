@@ -21,7 +21,11 @@ class DifferenceDialog(QtWidgets.QDialog):
         self.parent = parent
         self.handler = handler
 
-        # self.ui.labelCurrentRateValue.setText(str(sfreq))
+        self.differences = []
+
+        for condition in conditions:
+            self.ui.comboBoxCondition1.addItem(condition)
+            self.ui.comboBoxCondition2.addItem(condition)
 
         self.batching_widget = BatchingWidget(
             experiment_getter=self._experiment_getter,
@@ -33,11 +37,29 @@ class DifferenceDialog(QtWidgets.QDialog):
     def _experiment_getter(self):
         return self.experiment
 
+    def on_pushButtonAdd_clicked(self, checked=None):
+        if checked is None:
+            return
+
+        condition1 = self.ui.comboBoxCondition1.currentText()
+        condition2 = self.ui.comboBoxCondition2.currentText()
+
+        self.differences.append((condition1, condition2))
+
+        item_name = f"{condition1} - {condition2}"
+        self.ui.listWidgetDifferences.addItem(item_name)
+
+    def on_pushButtonClear_clicked(self, checked=None):
+        if checked is None:
+            return
+
+        self.ui.listWidgetDifferences.clear()
+        self.differences = []
+
     def accept(self):
         subject = self.experiment.active_subject
 
-        differences = []
-        params = {'differences': differences}
+        params = {'differences': self.differences}
 
         try:
             self.handler(subject, params)
@@ -56,8 +78,7 @@ class DifferenceDialog(QtWidgets.QDialog):
         for name, subject in self.experiment.subjects.items():
             if name in selected_subject_names:
                 try:
-                    differences = []
-                    params = {'differences': differences}
+                    params = {'differences': self.differences}
 
                     self.handler(subject, params)
                     subject.release_memory()
