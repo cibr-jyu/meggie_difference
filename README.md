@@ -4,7 +4,7 @@ meggie\_difference is a simple plugin for meggie to create difference objects ba
 
 ## Support
 
-- [ ] Evokeds
+- [x] Evokeds
 - [ ] Spectrums
 - [ ] TFR
 
