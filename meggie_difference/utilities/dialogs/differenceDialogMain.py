@@ -12,7 +12,7 @@ from meggie.utilities.messaging import exc_messagebox
 class DifferenceDialog(QtWidgets.QDialog):
     """ Contains logic for the difference dialog.
     """
-    def __init__(self, parent, experiment, conditions, handler):
+    def __init__(self, parent, experiment, conditions, name, handler):
         QtWidgets.QDialog.__init__(self, parent)
         self.ui = Ui_differenceDialog()
         self.ui.setupUi(self)
@@ -21,6 +21,7 @@ class DifferenceDialog(QtWidgets.QDialog):
         self.parent = parent
         self.handler = handler
 
+        self.name = name
         self.differences = []
 
         for condition in conditions:
@@ -59,10 +60,11 @@ class DifferenceDialog(QtWidgets.QDialog):
     def accept(self):
         subject = self.experiment.active_subject
 
-        params = {'differences': self.differences}
+        params = {'differences': self.differences, "name": self.name}
 
         try:
             self.handler(subject, params)
+            self.experiment.save_experiment_settings()
         except Exception as exc:
             exc_messagebox(self.parent, exc)
             return
@@ -78,7 +80,7 @@ class DifferenceDialog(QtWidgets.QDialog):
         for name, subject in self.experiment.subjects.items():
             if name in selected_subject_names:
                 try:
-                    params = {'differences': self.differences}
+                    params = {'differences': self.differences, "name": self.name}
 
                     self.handler(subject, params)
                     subject.release_memory()
@@ -87,6 +89,12 @@ class DifferenceDialog(QtWidgets.QDialog):
                         (subject, str(exc)))
                     logging.getLogger('ui_logger').exception('')
         self.batching_widget.cleanup()
+
+        try:
+            self.experiment.save_experiment_settings()
+        except Exception as exc:
+            exc_messagebox(self, exc)
+            return
 
         self.parent.initialize_ui()
         self.close()
