@@ -49,7 +49,6 @@ class EvokedDifference(Action):
             raise Exception('No evoked found with name ' + str(selected_name))
 
         difference_fun(subject, evoked, params, do_meanwhile=self.window.update_ui)
-        subject.save()
 
     def run(self):
 
