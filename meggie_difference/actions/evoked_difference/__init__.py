@@ -1,5 +1,4 @@
 from meggie.datatypes.evoked.evoked import Evoked
-from meggie.utilities.messaging import messagebox
 from meggie.utilities.names import next_available_name
 from meggie.utilities.threading import threaded
 from meggie.mainwindow.dynamic import Action
@@ -7,21 +6,41 @@ from meggie.mainwindow.dynamic import subject_action
 
 from meggie_difference.utilities.dialogs.differenceDialogMain import DifferenceDialog
 
+
 class EvokedDifference(Action):
-    """ Creates a difference object.
-    """
+    """Creates a difference object."""
+
+    def run(self):
+
+        try:
+            selected_name = self.data["outputs"]["evoked"][0]
+        except IndexError:
+            return
+
+        meggie_evoked = self.experiment.active_subject.evoked.get(selected_name)
+        if not meggie_evoked:
+            return
+
+        conditions = list(meggie_evoked.content.keys())
+
+        name = next_available_name(
+            self.experiment.active_subject.evoked.keys(), "diff_" + selected_name
+        )
+
+        difference_dialog = DifferenceDialog(
+            self.window, self.experiment, conditions, name, self.handler
+        )
+        difference_dialog.show()
 
     @subject_action
     def handler(self, subject, params):
-        """
-        """
+        """ """
+
         @threaded
         def difference_fun(subject, evoked, params):
             evokeds = {}
-            evoked_params = {
-                'conditions': []
-            }
-            for difference in params['differences']:
+            evoked_params = {"conditions": []}
+            for difference in params["differences"]:
 
                 diff_name = f"{difference[0]} - {difference[1]}"
 
@@ -34,39 +53,20 @@ class EvokedDifference(Action):
                 mne_evoked.comment = diff_name
                 mne_evoked.filename = None
 
-                evoked_params['conditions'].append(diff_name)
+                evoked_params["conditions"].append(diff_name)
                 evokeds[diff_name] = mne_evoked
 
             evoked_directory = subject.evoked_directory
-            evoked = Evoked(params['name'], evoked_directory, evoked_params, content=evokeds)
+            evoked = Evoked(
+                params["name"], evoked_directory, evoked_params, content=evokeds
+            )
             evoked.save_content()
-            subject.add(evoked, 'evoked')
+            subject.add(evoked, "evoked")
 
-        selected_name = self.data['outputs']['evoked'][0]
+        selected_name = self.data["outputs"]["evoked"][0]
 
         evoked = subject.evoked.get(selected_name)
         if not evoked:
-            raise Exception('No evoked found with name ' + str(selected_name))
+            raise Exception("No evoked found with name " + str(selected_name))
 
         difference_fun(subject, evoked, params, do_meanwhile=self.window.update_ui)
-
-    def run(self):
-
-        try:
-            selected_name = self.data['outputs']['evoked'][0]
-        except IndexError as exc:
-            return
-
-        meggie_evoked = self.experiment.active_subject.evoked.get(selected_name)
-        if not meggie_evoked:
-            return
-
-        conditions = list(meggie_evoked.content.keys())
-
-        name = next_available_name(
-            self.experiment.active_subject.evoked.keys(),
-            "diff_" + selected_name)
-
-        difference_dialog = DifferenceDialog(
-            self.window, self.experiment, conditions, name, self.handler)
-        difference_dialog.show()

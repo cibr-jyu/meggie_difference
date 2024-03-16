@@ -1,5 +1,6 @@
 """ Contains a class for logic of the difference dialog.
 """
+
 import logging
 
 from PyQt5 import QtWidgets
@@ -10,8 +11,8 @@ from meggie.utilities.messaging import exc_messagebox
 
 
 class DifferenceDialog(QtWidgets.QDialog):
-    """ Contains logic for the difference dialog.
-    """
+    """Contains logic for the difference dialog."""
+
     def __init__(self, parent, experiment, conditions, name, handler):
         QtWidgets.QDialog.__init__(self, parent)
         self.ui = Ui_differenceDialog()
@@ -32,7 +33,8 @@ class DifferenceDialog(QtWidgets.QDialog):
             experiment_getter=self._experiment_getter,
             parent=self,
             container=self.ui.groupBoxBatching,
-            geometry=self.ui.batchingWidgetPlaceholder.geometry())
+            geometry=self.ui.batchingWidgetPlaceholder.geometry(),
+        )
         self.ui.gridLayoutBatching.addWidget(self.batching_widget, 0, 0, 1, 1)
 
     def _experiment_getter(self):
@@ -60,7 +62,7 @@ class DifferenceDialog(QtWidgets.QDialog):
     def accept(self):
         subject = self.experiment.active_subject
 
-        params = {'differences': self.differences, "name": self.name}
+        params = {"differences": self.differences, "name": self.name}
 
         try:
             self.handler(subject, params)
@@ -73,21 +75,19 @@ class DifferenceDialog(QtWidgets.QDialog):
         self.close()
 
     def acceptBatch(self):
-        experiment = self.experiment
 
         selected_subject_names = self.batching_widget.selected_subjects
 
         for name, subject in self.experiment.subjects.items():
             if name in selected_subject_names:
                 try:
-                    params = {'differences': self.differences, "name": self.name}
+                    params = {"differences": self.differences, "name": self.name}
 
                     self.handler(subject, params)
                     subject.release_memory()
                 except Exception as exc:
-                    self.batching_widget.failed_subjects.append(
-                        (subject, str(exc)))
-                    logging.getLogger('ui_logger').exception('')
+                    self.batching_widget.failed_subjects.append((subject, str(exc)))
+                    logging.getLogger("ui_logger").exception("")
         self.batching_widget.cleanup()
 
         try:
