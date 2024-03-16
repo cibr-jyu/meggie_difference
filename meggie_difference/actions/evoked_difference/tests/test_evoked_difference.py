@@ -1,5 +1,3 @@
-from PyQt5 import QtCore
-
 from meggie_difference.utilities.testing import BaseDifferenceTestAction
 from meggie_difference.actions.evoked_difference import EvokedDifference
 from meggie_difference.utilities.dialogs.differenceDialogMain import (

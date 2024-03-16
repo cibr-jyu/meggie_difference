@@ -1,5 +1,4 @@
 from meggie.datatypes.evoked.evoked import Evoked
-from meggie.utilities.messaging import messagebox
 from meggie.utilities.names import next_available_name
 from meggie.utilities.threading import threaded
 from meggie.mainwindow.dynamic import Action
@@ -15,7 +14,7 @@ class EvokedDifference(Action):
 
         try:
             selected_name = self.data["outputs"]["evoked"][0]
-        except IndexError as exc:
+        except IndexError:
             return
 
         meggie_evoked = self.experiment.active_subject.evoked.get(selected_name)
