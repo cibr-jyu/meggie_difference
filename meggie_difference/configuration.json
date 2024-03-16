@@ -1,6 +1,7 @@
 {
     "id": "meggie_difference",
-    "name": "Create difference objects",
+    "name": "Difference",
+    "description": "Create difference objects",
     "author": "CIBR",
     "tabs": [
         {

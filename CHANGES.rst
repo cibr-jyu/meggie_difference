@@ -1,10 +1,17 @@
 Changelog
 =========
 
-0.1.2 (unreleased)
+0.1.3 (unreleased)
 -----------------
 
 - nothing changed yet
+
+0.1.2 (2024-03-16)
+-----------------
+
+- Add tests
+- Update action descriptions
+- Add a test workflow
 
 0.1.1 (2023-08-07)
 -----------------
