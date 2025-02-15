@@ -10,7 +10,7 @@ from meggie_difference.utilities.dialogs.differenceDialogMain import DifferenceD
 class EvokedDifference(Action):
     """Creates a difference object."""
 
-    def run(self):
+    def run(self, params={}):
 
         try:
             selected_name = self.data["outputs"]["evoked"][0]
@@ -70,3 +70,4 @@ class EvokedDifference(Action):
             raise Exception("No evoked found with name " + str(selected_name))
 
         difference_fun(subject, evoked, params, do_meanwhile=self.window.update_ui)
+        self.experiment.save_experiment_settings()

@@ -1,5 +1,4 @@
-""" Contains a class for logic of the difference dialog.
-"""
+"""Contains a class for logic of the difference dialog."""
 
 import logging
 
@@ -66,7 +65,6 @@ class DifferenceDialog(QtWidgets.QDialog):
 
         try:
             self.handler(subject, params)
-            self.experiment.save_experiment_settings()
         except Exception as exc:
             exc_messagebox(self.parent, exc)
             return
@@ -89,12 +87,6 @@ class DifferenceDialog(QtWidgets.QDialog):
                     self.batching_widget.failed_subjects.append((subject, str(exc)))
                     logging.getLogger("ui_logger").exception("")
         self.batching_widget.cleanup()
-
-        try:
-            self.experiment.save_experiment_settings()
-        except Exception as exc:
-            exc_messagebox(self, exc)
-            return
 
         self.parent.initialize_ui()
         self.close()
