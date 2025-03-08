@@ -7,7 +7,5 @@ setup(
     packages=['meggie_difference'],
     include_package_data=True,
     zip_safe=False,
-    install_requires=[
-        'meggie>=1.9.0',
-    ]
+    install_requires=[]
 )
