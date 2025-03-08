@@ -11,6 +11,10 @@
         {
             "id": "spectrum",
             "output_actions": ["spectrum_difference"]
+        },
+        {
+            "id": "tfr",
+            "output_actions": ["tfr_difference"]
         }
     ]
 }
