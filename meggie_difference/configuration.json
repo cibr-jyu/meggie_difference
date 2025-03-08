@@ -6,8 +6,11 @@
     "tabs": [
         {
             "id": "evoked",
-            "name": "Evoked responses",
             "output_actions": ["evoked_difference"]
+        },
+        {
+            "id": "spectrum",
+            "output_actions": ["spectrum_difference"]
         }
     ]
 }
