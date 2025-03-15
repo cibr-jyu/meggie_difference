@@ -1,11 +1,12 @@
-from meggie_difference.utilities.testing import BaseDifferenceTestAction
+from meggie.utilities.testing import BaseTestAction
+
 from meggie_difference.actions.spectrum_difference import SpectrumDifference
 from meggie_difference.utilities.dialogs.differenceDialogMain import (
     DifferenceDialog,
 )
 
 
-class TestSpectrumDifference(BaseDifferenceTestAction):
+class TestSpectrumDifference(BaseTestAction):
 
     def test_spectrum_difference(self):
 

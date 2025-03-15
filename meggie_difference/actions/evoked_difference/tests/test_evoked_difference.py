@@ -3,10 +3,10 @@ import mne
 from meggie.utilities.testing import create_evoked_conditions_experiment
 from meggie.utilities.events import find_events
 from meggie.utilities.events import find_stim_channel
+from meggie.utilities.testing import BaseTestAction
 from meggie.datatypes.epochs.epochs import Epochs
 from meggie.datatypes.evoked.evoked import Evoked
 
-from meggie_difference.utilities.testing import BaseDifferenceTestAction
 from meggie_difference.actions.evoked_difference import EvokedDifference
 from meggie_difference.utilities.dialogs.differenceDialogMain import (
     DifferenceDialog,
@@ -84,7 +84,7 @@ def create_difference_experiment(experiment_folder, experiment_name, n_subjects=
     return experiment
 
 
-class TestEvokedDifference(BaseDifferenceTestAction):
+class TestEvokedDifference(BaseTestAction):
 
     def setup_experiment(self):
         self.experiment = create_difference_experiment(self.dirpath, "test_experiment")

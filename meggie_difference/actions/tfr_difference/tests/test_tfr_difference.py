@@ -1,11 +1,11 @@
-from meggie_difference.utilities.testing import BaseDifferenceTestAction
+from meggie.utilities.testing import BaseTestAction
 from meggie_difference.actions.tfr_difference import TFRDifference
 from meggie_difference.utilities.dialogs.differenceDialogMain import (
     DifferenceDialog,
 )
 
 
-class TestTFRDifference(BaseDifferenceTestAction):
+class TestTFRDifference(BaseTestAction):
 
     def test_tfr_difference(self):
 
