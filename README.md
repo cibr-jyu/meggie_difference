@@ -4,8 +4,8 @@ meggie\_difference is a simple plugin for meggie to create difference objects ba
 
 ## Installation
 
-1. Activate the meggie environment
-1. Then install: python -m pip install meggie\_difference
+1. Activate the meggie existing environment
+2. Then install: python -m pip install meggie\_difference
 
 ## Usage
 

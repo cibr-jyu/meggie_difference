@@ -1,10 +1,10 @@
 .PHONY: format
 format:
-	black -t py39 meggie_difference
+	black meggie_difference
 
 .PHONY: check
 check:
-	black --check -t py39 meggie_difference
+	black --check meggie_difference
 	pylama meggie_difference
 
 .PHONY: test

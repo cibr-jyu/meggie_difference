@@ -1,10 +1,18 @@
 Changelog
 =========
 
-0.1.3 (unreleased)
+0.2.1 (unreleased)
 -----------------
 
 - nothing changed yet
+
+0.2.0 (2025-03-17)
+-----------------
+
+- Migrate to pyproject.toml
+- Add spectrum differences
+- Add tfr differences
+- Upgrade to work with Meggie 1.9.0
 
 0.1.2 (2024-03-16)
 -----------------
